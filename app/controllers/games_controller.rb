@@ -30,6 +30,7 @@ class GamesController < ApplicationController
   end
 
   def invalid_attempt_message(attempt, attempt_result)
+    @score = 0
     if attempt_result == false
       return "#{attempt} is not an english word"
     else
@@ -38,9 +39,9 @@ class GamesController < ApplicationController
   end
 
   def run_game(attempt, letters)
-    # TODO: runs the game and return detailed hash of result (with `:score`, `:message` and `:time` keys)
     if word_in_grid?(attempt, letters) == true && url_checker(attempt) == true
-      return "Well done! #{attempt} is a valid word "
+      @score = attempt.length
+      return "Well done! #{attempt} is a valid word"
     else
       invalid_attempt_message(attempt, url_checker(attempt))
     end
